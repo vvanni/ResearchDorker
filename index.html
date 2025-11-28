@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HunterxDorker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>HunterxDorker</h1>
+            <p class="subtitle">Advanced OSINT Query Builder</p>
+        </header>
+
+        <section class="input-section">
+            <div class="input-wrapper">
+                <label for="target-domain">Target Domain</label>
+                <div class="input-group">
+                    <span class="prefix">site:</span>
+                    <input type="text" id="target-domain" placeholder="example.com" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="input-wrapper" style="margin-top: 1.5rem;">
+                <label for="search-engine">Search Engine</label>
+                <div class="input-group">
+                    <select id="search-engine">
+                        <option value="google">Google</option>
+                        <option value="duckduckgo">DuckDuckGo</option>
+                        <option value="bing">Bing</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="dorks-container" id="dorks-container">
+            <!-- Dork categories and buttons will be injected here by JS -->
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>For educational purposes only.</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
