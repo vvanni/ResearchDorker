@@ -1,1 +1,1 @@
-Downlaod and open index
+Downlaod and open index.html
