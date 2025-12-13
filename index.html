@@ -12,26 +12,34 @@
     <main class="container">
         <header class="header">
             <h1>HunterxDorker</h1>
-            <p class="subtitle">Advanced OSINT Query Builder</p>
         </header>
 
         <section class="input-section">
-            <div class="input-wrapper">
-                <label for="target-domain">Target Domain</label>
-                <div class="input-group">
-                    <span class="prefix">site:</span>
-                    <input type="text" id="target-domain" placeholder="example.com" autocomplete="off">
+            <div class="input-row">
+                <div class="input-wrapper">
+                    <label for="target-domain">Target Domain <span class="optional">(optional)</span></label>
+                    <div class="input-group">
+                        <span class="prefix">site:</span>
+                        <input type="text" id="target-domain" placeholder="example.com" autocomplete="off">
+                    </div>
                 </div>
-            </div>
 
-            <div class="input-wrapper" style="margin-top: 1.5rem;">
-                <label for="search-engine">Search Engine</label>
-                <div class="input-group">
-                    <select id="search-engine">
-                        <option value="google">Google</option>
-                        <option value="duckduckgo">DuckDuckGo</option>
-                        <option value="bing">Bing</option>
-                    </select>
+                <div class="input-wrapper">
+                    <label for="search-topic">Search Topic <span class="optional">(optional)</span></label>
+                    <div class="input-group">
+                        <input type="text" id="search-topic" placeholder="Example" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="search-engine">Search Engine</label>
+                    <div class="input-group">
+                        <select id="search-engine">
+                            <option value="google">Google</option>
+                            <option value="duckduckgo">DuckDuckGo</option>
+                            <option value="bing">Bing</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </section>
