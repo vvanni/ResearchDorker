@@ -1,5 +1,6 @@
 const container = document.getElementById('dorks-container');
 const domainInput = document.getElementById('target-domain');
+const topicInput = document.getElementById('search-topic');
 const engineSelect = document.getElementById('search-engine');
 
 const engines = {
@@ -8,42 +9,29 @@ const engines = {
     bing: "https://www.bing.com/search?q="
 };
 
-async function loadDorks() {
-    if (typeof dorksData !== 'undefined') {
-        renderDorks(dorksData);
-    } else {
-        console.error('Error loading dorks: dorksData is undefined');
+function loadDorks() {
+    if (typeof dorksData === 'undefined') {
         container.innerHTML = '<p>Failed to load dorks.</p>';
+        return;
     }
-}
 
-function renderDorks(dorks) {
-    container.innerHTML = dorks.map(category => `
+    container.innerHTML = dorksData.map(category => `
         <div class="category">
             <h2 class="category-title">${category.category}</h2>
             <div class="dork-grid">
-                ${category.items.map(dork => {
-        // Safely encode the query for the data attribute
-        const safeQuery = dork.query.replace(/"/g, '&quot;');
-        return `
-                    <div class="dork-card" data-query="${safeQuery}">
-                        <div class="dork-header">
-                            <div class="dork-name">${dork.name}</div>
-                        </div>
+                ${category.items.map(dork => `
+                    <div class="dork-card" data-query="${dork.query.replace(/"/g, '&quot;')}">
+                        <div class="dork-name">${dork.name}</div>
                         <div class="dork-desc">${dork.desc}</div>
                     </div>
-                `}).join('')}
+                `).join('')}
             </div>
         </div>
     `).join('');
 
-    // Add event listeners after rendering
-    document.querySelectorAll('.dork-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-
-            const query = card.getAttribute('data-query');
-            performSearch(query);
-        });
+    container.addEventListener('click', e => {
+        const card = e.target.closest('.dork-card');
+        if (card) performSearch(card.dataset.query);
     });
 }
 
@@ -51,46 +39,47 @@ function sanitizeDomain(domain) {
     return domain.replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/$/, '');
 }
 
-
-
 function performSearch(query) {
-    let domain = domainInput.value.trim();
-    if (!domain) {
-        domainInput.focus();
+    const domain = domainInput.value.trim();
+    const topic = topicInput.value.trim();
+    const cleanDomain = domain ? sanitizeDomain(domain) : '';
 
-        return;
-    }
+    let fullQuery;
 
-    domain = sanitizeDomain(domain);
-
-    let fullQuery = "";
     if (query.includes("{domain}")) {
-        fullQuery = query.replace(/{domain}/g, domain);
+        // Cloud/repo searches - use domain or topic as the search term
+        const searchTerm = cleanDomain || topic || '';
+        fullQuery = searchTerm ? query.replace(/{domain}/g, searchTerm) : query.replace(/\"{domain}\"/g, '');
     } else {
-        fullQuery = `site:${domain} (${query})`;
+        // Regular dorks - build query from parts
+        const parts = [];
+        if (cleanDomain) parts.push(`site:${cleanDomain}`);
+        parts.push(`(${query})`);
+        if (topic) parts.push(`"${topic}"`);
+        fullQuery = parts.join(' ');
     }
 
-    // Replace | with OR for better cross-engine compatibility
-    fullQuery = fullQuery.replace(/ \| /g, ' OR ');
+    // Clean up: replace | with OR, normalize spaces
+    fullQuery = fullQuery.replace(/ \| /g, ' OR ').replace(/\s+/g, ' ').trim();
 
-    const encodedQuery = encodeURIComponent(fullQuery);
-    const engine = engineSelect.value;
-    const searchUrl = `${engines[engine]}${encodedQuery}`;
-
+    const searchUrl = engines[engineSelect.value] + encodeURIComponent(fullQuery);
     window.open(searchUrl, '_blank');
 }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', loadDorks);
+function handleEnterKey(e) {
+    if (e.key !== 'Enter') return;
 
-// Allow 'Enter' key in input to trigger a basic search
-domainInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        const domain = domainInput.value.trim();
-        if (domain) {
-            const engine = engineSelect.value;
-            const encodedDomain = encodeURIComponent(domain);
-            window.open(`${engines[engine]}site:${encodedDomain}`, '_blank');
-        }
-    }
-});
+    const domain = domainInput.value.trim();
+    const topic = topicInput.value.trim();
+    if (!domain && !topic) return;
+
+    let query = '';
+    if (domain) query += `site:${sanitizeDomain(domain)} `;
+    if (topic) query += `"${topic}"`;
+
+    window.open(engines[engineSelect.value] + encodeURIComponent(query.trim()), '_blank');
+}
+
+document.addEventListener('DOMContentLoaded', loadDorks);
+domainInput.addEventListener('keypress', handleEnterKey);
+topicInput.addEventListener('keypress', handleEnterKey);
