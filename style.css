@@ -32,17 +32,24 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.subtitle {
-    font-size: 1.1rem;
-    color: #999;
-}
-
 .input-section {
     background: #2a2a2a;
     border-radius: 8px;
     padding: 2rem;
     margin-bottom: 2rem;
     border: 1px solid #3a3a3a;
+}
+
+.input-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.input-row .input-wrapper {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 0;
 }
 
 .input-wrapper {
@@ -58,6 +65,12 @@ body {
     margin-bottom: 0.5rem;
     color: #ccc;
     font-weight: 500;
+}
+
+.optional {
+    color: #666;
+    font-weight: 400;
+    font-size: 0.85rem;
 }
 
 .input-group {
@@ -158,8 +171,6 @@ body {
     font-size: 0.9rem;
     margin-top: auto;
 }
-
-/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
