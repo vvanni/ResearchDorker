@@ -1,43 +1,123 @@
 const dorksData = [
+    // ==================== SENSITIVE DATA & EXPOSURE ====================
     {
-        "category": "Sensitive Data & Exposure",
+        "category": "Documents",
         "items": [
-            { "name": "Public Documents", "query": "ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv | ext:txt | ext:xls | ext:xlsx", "desc": "Finds publicly available documents." },
-            { "name": "Sensitive Keywords", "query": "intext:\"confidential\" | intext:\"Not for Public Release\" | intext:\"internal use only\" | intext:\"do not distribute\"", "desc": "Documents containing sensitive markings." },
-            { "name": "Directory Listings", "query": "intitle:index.of", "desc": "Finds exposed directory listings." },
-            { "name": "Configuration & Secrets", "query": "ext:xml | ext:conf | ext:cnf | ext:reg | ext:inf | ext:rdp | ext:cfg | ext:txt | ext:ora | ext:ini | ext:env | ext:sh | ext:bak | ext:backup | ext:swp | ext:old | ext:~ | ext:git | ext:svn | ext:htpasswd | ext:htaccess | ext:json | filetype:ini \"[WS_FTP]\" | intitle:\"index of\" id_rsa", "desc": "Finds config files, keys, and secrets." },
-            { "name": "Database Files", "query": "ext:sql | ext:dbf | ext:mdb", "desc": "Finds exposed database files." },
-            { "name": "Log Files", "query": "ext:log", "desc": "Finds exposed log files." },
-            { "name": "Cloud Storage Leaks", "query": "site:s3.amazonaws.com \"{domain}\" | site:blob.core.windows.net \"{domain}\" | site:googleapis.com \"{domain}\" | site:drive.google.com \"{domain}\" | site:dev.azure.com \"{domain}\" | site:onedrive.live.com \"{domain}\" | site:digitaloceanspaces.com \"{domain}\" | site:sharepoint.com \"{domain}\" | site:s3-external-1.amazonaws.com \"{domain}\" | site:s3.dualstack.us-east-1.amazonaws.com \"{domain}\" | site:firebasestorage.googleapis.com \"{domain}\" | site:dropbox.com/s \"{domain}\" | site:docs.google.com inurl:\"/d/\" \"{domain}\"", "desc": "Searches for domain mentions on public cloud storage." },
-            { "name": "Code Repos & Pastes", "query": "site:pastebin.com \"{domain}\" | site:jsfiddle.net \"{domain}\" | site:codebeautify.org \"{domain}\" | site:codepen.io \"{domain}\" | site:github.com \"{domain}\" | site:gitlab.com \"{domain}\" | site:bitbucket.org \"{domain}\"", "desc": "Searches for code leaks on sharing sites." },
-            {
-                "name": "Bug Bounty Reports", "query": "(site:bugcrowd.com OR site:hackerone.com) (inurl:disclosure OR inurl:vulnerability OR inurl:report) intext:\"{domain}\"", "desc": "Searches major bug bounty platforms for disclosed reports."
-            }
+            { "name": "PDF Files", "query": "ext:pdf", "desc": "Finds PDF documents." },
+            { "name": "Word Documents", "query": "ext:doc | ext:docx | ext:odt", "desc": "Finds Word documents." },
+            { "name": "Spreadsheets", "query": "ext:xls | ext:xlsx | ext:csv", "desc": "Finds spreadsheets." },
+            { "name": "Presentations", "query": "ext:ppt | ext:pptx", "desc": "Finds presentations." },
+            { "name": "Confidential Docs", "query": "filetype:pdf intitle:\"Confidential\"", "desc": "Documents marked confidential." },
+            { "name": "Sensitive Keywords", "query": "intext:\"confidential\" | intext:\"internal use only\"", "desc": "Documents with sensitive markings." }
+        ]
+    },
+    {
+        "category": "Configuration & Secrets",
+        "items": [
+            { "name": "Config Files", "query": "ext:conf | ext:cfg | ext:ini", "desc": "Finds config files." },
+            { "name": "Environment Files", "query": "ext:env", "desc": "Finds .env files." },
+            { "name": "Backup Files", "query": "ext:bak | ext:backup | ext:old", "desc": "Finds backups." },
+            { "name": "Git Leaks", "query": "inurl:.git", "desc": "Finds exposed git repos." },
+            { "name": "SSH Keys", "query": "intitle:\"index of\" id_rsa", "desc": "Finds SSH private keys." },
+            { "name": "Password Files", "query": "ext:htpasswd | ext:passwd", "desc": "Finds password files." }
+        ]
+    },
+    {
+        "category": "Database Exposure",
+        "items": [
+            { "name": "SQL Dumps", "query": "ext:sql", "desc": "Finds SQL dumps." },
+            { "name": "Access Databases", "query": "ext:mdb | ext:accdb", "desc": "Finds Access DBs." },
+            { "name": "Log Files", "query": "ext:log", "desc": "Finds log files." }
+        ]
+    },
+    {
+        "category": "Directory Listings",
+        "items": [
+            { "name": "Open Directories", "query": "intitle:index.of", "desc": "Finds directory listings." },
+            { "name": "Admin Directories", "query": "intitle:\"Index of\" inurl:/admin", "desc": "Finds admin directories." },
+            { "name": "Backup Directories", "query": "intitle:\"Index of\" inurl:/backup", "desc": "Finds backup directories." },
+            { "name": "Config Directories", "query": "intitle:\"Index of\" inurl:/config", "desc": "Finds config directories." }
+        ]
+    },
+    // ==================== CLOUD & EXTERNAL ====================
+    {
+        "category": "Cloud Storage",
+        "items": [
+            { "name": "AWS S3", "query": "site:s3.amazonaws.com \"{domain}\"", "desc": "Finds AWS S3 mentions." },
+            { "name": "Azure Blob", "query": "site:blob.core.windows.net \"{domain}\"", "desc": "Finds Azure Blob mentions." },
+            { "name": "Google Drive", "query": "site:drive.google.com \"{domain}\"", "desc": "Finds Google Drive mentions." },
+            { "name": "Firebase", "query": "site:firebasestorage.googleapis.com \"{domain}\"", "desc": "Finds Firebase mentions." },
+            { "name": "Dropbox", "query": "site:dropbox.com/s \"{domain}\"", "desc": "Finds Dropbox files." }
+        ]
+    },
+    {
+        "category": "Code Repositories",
+        "items": [
+            { "name": "GitHub", "query": "site:github.com \"{domain}\"", "desc": "Finds code on GitHub." },
+            { "name": "GitLab", "query": "site:gitlab.com \"{domain}\"", "desc": "Finds code on GitLab." },
+            { "name": "Pastebin", "query": "site:pastebin.com \"{domain}\"", "desc": "Finds pastes on Pastebin." }
+        ]
+    },
+    {
+        "category": "Bug Bounty",
+        "items": [
+            { "name": "HackerOne", "query": "site:hackerone.com intext:\"{domain}\"", "desc": "Finds HackerOne reports." },
+            { "name": "Bugcrowd", "query": "site:bugcrowd.com intext:\"{domain}\"", "desc": "Finds Bugcrowd reports." }
+        ]
+    },
+    // ==================== ATTACK SURFACE ====================
+    {
+        "category": "Login & Admin",
+        "items": [
+            { "name": "Admin Login", "query": "inurl:admin | intitle:\"Admin Login\"", "desc": "Finds admin logins." },
+            { "name": "User Login", "query": "intitle:login | inurl:login", "desc": "Finds login pages." },
+            { "name": "cPanel", "query": "inurl:cpanel", "desc": "Finds cPanel logins." },
+            { "name": "Webmail", "query": "inurl:webmail", "desc": "Finds webmail logins." },
+            { "name": "Upload Forms", "query": "inurl:upload", "desc": "Finds file upload forms." }
+        ]
+    },
+    {
+        "category": "APIs & Dev",
+        "items": [
+            { "name": "REST APIs", "query": "inurl:api | inurl:v1 | inurl:v2", "desc": "Finds API endpoints." },
+            { "name": "GraphQL", "query": "inurl:graphql", "desc": "Finds GraphQL endpoints." },
+            { "name": "Swagger", "query": "intitle:\"Swagger UI\"", "desc": "Finds Swagger docs." },
+            { "name": "Dev/Staging", "query": "inurl:dev | inurl:staging | inurl:test", "desc": "Finds dev environments." }
+        ]
+    },
+    // ==================== WORDPRESS ====================
+    {
+        "category": "WordPress",
+        "items": [
+            { "name": "WP Sites", "query": "intext:\"Powered by WordPress\"", "desc": "Finds WordPress sites." },
+            { "name": "WP Login", "query": "inurl:wp-login.php", "desc": "Finds WP login pages." },
+            { "name": "WP Plugins", "query": "inurl:wp-content/plugins/", "desc": "Finds WP plugins." },
+            { "name": "WP Uploads", "query": "inurl:wp-content/uploads", "desc": "Finds WP uploads." }
+        ]
+    },
 
+    // ==================== VULNERABILITY HUNTING ====================
+    {
+        "category": "SQL Injection",
+        "items": [
+            { "name": "ID Parameters", "query": "inurl:id= | inurl:page= | inurl:cat=", "desc": "Common SQLi params." },
+            { "name": "Search Parameters", "query": "inurl:search= | inurl:query=", "desc": "Search params for SQLi." },
+            { "name": "MySQL Errors", "query": "intext:\"sql syntax near\" | intext:\"Warning: mysql_\"", "desc": "Finds MySQL errors." },
+            { "name": "PHP Errors", "query": "\"PHP Parse error\" | \"PHP Warning\"", "desc": "Finds PHP errors." }
         ]
     },
     {
-        "category": "Attack Surface",
+        "category": "RCE & LFI",
         "items": [
-            { "name": "Login Portals", "query": "inurl:admin | inurl:login | inurl:adminlogin | inurl:cpanel | inurl:webmail | inurl:signin | intitle:login | intitle:signin | inurl:secure", "desc": "Finds administrative and user login pages." },
-            { "name": "API Endpoints", "query": "inurl:api | inurl:rest | inurl:v1 | inurl:v2 | inurl:v3 | inurl:graphql", "desc": "Finds potential API endpoints." },
-            { "name": "API Documentation", "query": "inurl:apidocs | inurl:api-docs | inurl:swagger | inurl:api-explorer | inurl:redoc | inurl:openapi | intitle:\"Swagger UI\"", "desc": "Finds exposed API documentation." },
-            { "name": "File Uploads", "query": "intext:\"choose file\" | inurl:upload", "desc": "Finds file upload functionalities." },
-            { "name": "Development Environments", "query": "inurl:test | inurl:env | inurl:dev | inurl:staging | inurl:sandbox | inurl:debug | inurl:temp | inurl:internal | inurl:demo | inurl:private | inurl:beta", "desc": "Finds test and staging environments." },
-            { "name": "WordPress", "query": "inurl:wp- | inurl:wp-content | inurl:plugins | inurl:uploads | inurl:themes | inurl:download", "desc": "Finds WordPress specific paths." }
+            { "name": "Command Params", "query": "inurl:cmd= | inurl:exec= | inurl:command=", "desc": "Command execution params." },
+            { "name": "File Params", "query": "inurl:file= | inurl:path= | inurl:include=", "desc": "File inclusion params." }
         ]
     },
     {
-        "category": "Vulnerability Hunting",
+        "category": "XSS & Redirect",
         "items": [
-            { "name": "SQL Injection", "query": "inurl:id= | inurl:page= | inurl:dir= | inurl:search= | inurl:category= | inurl:file= | inurl:class= | inurl:url= | inurl:news= | inurl:item= | inurl:menu= | inurl:lang= | inurl:name= | inurl:ref= | inurl:title= | inurl:view= | inurl:topic= | inurl:thread= | inurl:type= | inurl:date= | inurl:form= | inurl:join= | inurl:main= | inurl:nav= | inurl:region= | inurl:pid= | inurl:cat= | inurl:sid=", "desc": "Parameters potentially vulnerable to SQLi." },
-            { "name": "SQL Errors", "query": "intext:\"sql syntax near\" | intext:\"syntax error has occurred\" | intext:\"incorrect syntax near\" | intext:\"unexpected end of SQL command\" | intext:\"Warning: mysql_connect()\" | intext:\"Warning: mysql_query()\" | intext:\"truly a mysql result set\" | \"database error\" | \"SQL syntax\" | \"undefined index\" | \"unhandled exception\" | \"stack trace\"", "desc": "Finds pages displaying SQL errors." },
-            { "name": "RCE Parameters", "query": "inurl:cmd= | inurl:exec= | inurl:command= | inurl:execute= | inurl:ping= | inurl:query= | inurl:jump= | inurl:code= | inurl:reg= | inurl:do= | inurl:func= | inurl:arg= | inurl:option= | inurl:load= | inurl:process= | inurl:step= | inurl:read= | inurl:function= | inurl:req= | inurl:feature= | inurl:exe= | inurl:module= | inurl:payload= | inurl:run= | inurl:print=", "desc": "Parameters potentially vulnerable to RCE." },
-            { "name": "LFI Parameters", "query": "inurl:cat= | inurl:dir= | inurl:action= | inurl:board= | inurl:date= | inurl:detail= | inurl:file= | inurl:download= | inurl:path= | inurl:folder= | inurl:prefix= | inurl:include= | inurl:page= | inurl:inc= | inurl:locate= | inurl:show= | inurl:doc= | inurl:site= | inurl:type= | inurl:view= | inurl:content= | inurl:document= | inurl:layout= | inurl:mod= | inurl:conf=", "desc": "Parameters potentially vulnerable to LFI." },
-            { "name": "XSS Parameters", "query": "inurl:q= | inurl:s= | inurl:search= | inurl:id= | inurl:lang= | inurl:keyword= | inurl:query= | inurl:page= | inurl:keywords= | inurl:year= | inurl:view= | inurl:email= | inurl:type= | inurl:name= | inurl:p= | inurl:month= | inurl:image= | inurl:list_type= | inurl:url= | inurl:terms= | inurl:categoryid= | inurl:key= | inurl:login= | inurl:begindate= | inurl:enddate=", "desc": "Parameters potentially vulnerable to XSS." },
-            { "name": "Open Redirect / SSRF", "query": "inurl:dest= | inurl:redirect= | inurl:uri= | inurl:path= | inurl:continue= | inurl:url= | inurl:window= | inurl:next= | inurl:data= | inurl:reference= | inurl:site= | inurl:html= | inurl:val= | inurl:validate= | inurl:domain= | inurl:callback= | inurl:return= | inurl:page= | inurl:feed= | inurl:host= | inurl:port= | inurl:to= | inurl:out= | inurl:view= | inurl:dir= | inurl:target= | inurl:rurl= | inurl:destination= | inurl:redir= | inurl:redirect_url= | inurl:redirect_uri= | inurl:cgi-bin/redirect.cgi | inurl:login?to= | inurl:image_url= | inurl:go= | inurl:return_to= | inurl:checkout_url=", "desc": "Parameters potentially vulnerable to Open Redirect or SSRF." },
-            { "name": "PHP Errors", "query": "\"PHP Parse error\" | \"PHP Warning\" | \"PHP Error\"", "desc": "Finds pages displaying PHP errors." },
-            { "name": "Server Errors", "query": "inurl:\"error\" | intitle:\"exception\" | intitle:\"failure\" | intitle:\"server at\" | inurl:exception", "desc": "Finds generic server error pages." }
+            { "name": "Input Params", "query": "inurl:q= | inurl:search= | inurl:name=", "desc": "User input params." },
+            { "name": "Redirect Params", "query": "inurl:redirect= | inurl:url= | inurl:next=", "desc": "Redirect params." }
         ]
     }
 ];
