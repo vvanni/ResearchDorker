@@ -29,7 +29,7 @@ const dorksData = [
         ]
     },
     {
-        "category": "Archives & Academic Intel",
+        "category": "Archives & Academic",
         "items": [
             { "name": "Wayback Machine", "query": "site:web.archive.org/web/*/ \"{domain}\"", "desc": "Explores historical cached versions of the target domain." },
             { "name": "Archive.today Cache", "query": "site:archive.today OR site:archive.ph \"{domain}\"", "desc": "Finds snapshots on alternative web archiving platforms." },
