@@ -36,7 +36,7 @@ const dorksData = [
         "category": "Archives & Academic",
         "items": [
             { "name": "Wayback Machine", "query": "site:web.archive.org \"{target}\"", "desc": "Explores historical cached versions of the target." },
-            { "name": "Archive.today Cache", "query": "site:archive.today \"{target}\"", "desc": "Finds snapshots on alternative web archiving platforms." },
+            { "name": "Ghost Archive", "query": "site:ghostarchive.org \"{target}\"", "desc": "Finds snapshots on alternative web archiving platforms." },
             { "name": "Google Scholar Articles", "query": "site:scholar.google.com \"{target}\"", "desc": "Locates scholarly articles and publications." },
             { "name": "Research Papers", "query": "site:researchgate.net \"{target}\"", "desc": "Finds papers uploaded by researchers and academics." },
             { "name": "WikiLeaks References", "query": "site:wikileaks.org \"{target}\"", "desc": "Searches for document leaks mentioning the target." }
