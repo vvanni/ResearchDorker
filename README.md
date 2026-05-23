@@ -33,7 +33,7 @@
 
 ## How to use
 
-Download and open index.html (No Installation Required)
+Download zip and extract, open index.html (No Installation Required)
 
 1. Enter a **Search Target** (e.g., `example.com` or `target keyword`).
 2. Select your **Target Mode**:
