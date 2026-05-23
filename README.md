@@ -38,5 +38,5 @@ Download and open index.html (No Installation Required)
 1. Enter a **Search Target** (e.g., `example.com` or `target keyword`).
 2. Select your **Target Mode**:
    - **Keyword**: Appends your target as a quoted string (`"target"`).
-   - **Site Filter**: Prepends your target to scope the search to a specific domain (`site:target`).
+   - **Site**: Prepends your target to scope the search to a specific domain (`site:target`).
 3. Click **Launch** to run the query in Google, DuckDuckGo, Bing, or Yandex.
