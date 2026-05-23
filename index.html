@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESEARCHxOSINT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>RESEARCHxOSINT</h1>
+            <p>Advanced search query generator for digital investigators and open-source intelligence analysts.</p>
+        </header>
+
+        <section class="input-section">
+            <div class="input-row">
+                <div class="input-wrapper" style="flex:2">
+                    <label for="search-target">Search Target</label>
+                    <div class="input-group">
+                        <input type="text" id="search-target" placeholder="example.com or keyword" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label>Target Mode</label>
+                    <div class="mode-toggle" id="target-mode">
+                        <button class="mode-btn active" data-mode="keyword" title="Append target as a quoted keyword">Keyword</button>
+                        <button class="mode-btn" data-mode="site" title="Prepend target as a site:">Site</button>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="search-engine">Search Engine</label>
+                    <div class="input-group">
+                        <select id="search-engine">
+                            <option value="google">Google</option>
+                            <option value="duckduckgo">DuckDuckGo</option>
+                            <option value="bing">Bing</option>
+                            <option value="yandex">Yandex</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="mode-hint" id="mode-hint"></div>
+        </section>
+
+        <section class="dorks-container" id="dorks-container">
+            <!-- Dork categories and buttons will be injected here by JS -->
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>For educational purposes only.</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
